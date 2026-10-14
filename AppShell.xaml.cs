@@ -9,8 +9,13 @@ namespace Notemaster
         public AppShell()
         {
             InitializeComponent();
+             Routing.RegisterRoute("addnote", typeof(Pages.AddNotePage));
+             Routing.RegisterRoute("textinput", typeof(Pages.TextInputPage));
+             Routing.RegisterRoute("preview", typeof(Pages.PreviewPage));
+           
             var currentTheme = Application.Current!.RequestedTheme;
             ThemeSegmentedControl.SelectedIndex = currentTheme == AppTheme.Light ? 0 : 1;
+            
         }
         public static async Task DisplaySnackbarAsync(string message)
         {

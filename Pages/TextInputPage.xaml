@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notemaster.Pages.TextInputPage"
+             Title="Texte ou fichier Word"
+             Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Border Stroke="{StaticResource Primary}" StrokeDashArray="4,3" Padding="10">
+                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                <VerticalStackLayout>
+                    <Editor x:Name="TextEditor" Placeholder="Colle ici ton cours..."
+                            HeightRequest="220" MaxLength="10000" TextChanged="OnTextChanged" />
+                    <Label x:Name="CounterLabel" Text="0 / 10000 caractères"
+                           HorizontalOptions="End" FontSize="12" TextColor="#6B7280" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button x:Name="ContinueButton" Text="Continuer" IsEnabled="False"
+                    BackgroundColor="{StaticResource Primary}" TextColor="White"
+                    HeightRequest="48" CornerRadius="12" Clicked="OnContinueClicked">
+                <Button.Triggers>
+                    <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                        <Setter Property="BackgroundColor" Value="#9CA3AF" />
+                    </Trigger>
+                </Button.Triggers>
+            </Button>
+
+            <Button Text="Importer un fichier Word (.docx)" BackgroundColor="Transparent"
+                    TextColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}"
+                    BorderWidth="1" HeightRequest="48" CornerRadius="12" Clicked="OnPickDocxClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notemaster.Pages.PreviewPage"
+             Title="Aperçu avant génération"
+             Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Label Text="Vérifie ta note avant de générer les fiches." />
+
+            <VerticalStackLayout x:Name="PhotosSection" Spacing="8" IsVisible="False">
+                <Label x:Name="PagesLabel" FontAttributes="Bold" />
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout x:Name="ThumbsLayout" Spacing="10" />
+                </ScrollView>
+                <Button x:Name="AddPageButton" Text="+ Ajouter une page"
+                        BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
+                        BorderColor="{StaticResource Primary}" BorderWidth="1"
+                        HeightRequest="44" CornerRadius="12" Clicked="OnAddPageClicked" />
+            </VerticalStackLayout>
+
+            <Border x:Name="TextSection" BackgroundColor="#F3F4F6" Padding="12"
+                    StrokeThickness="0" IsVisible="False">
+                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                <Label x:Name="PreviewText" TextColor="Black" />
+            </Border>
+
+            <Label Text="Cours" FontAttributes="Bold" />
+            <Picker x:Name="CoursePicker" Title="Choisir un cours"
+                    SelectedIndexChanged="OnCourseChanged" />
+
+            <Label Text="Titre" FontAttributes="Bold" />
+            <Entry x:Name="TitleEntry" Placeholder="Titre de la note" HeightRequest="48" />
+
+            <Button x:Name="GenerateButton" Text="Générer les fiches" IsEnabled="False"
+                    BackgroundColor="{StaticResource Primary}" TextColor="White"
+                    HeightRequest="52" CornerRadius="26" Clicked="OnGenerateClicked">
+                <Button.Triggers>
+                    <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                        <Setter Property="BackgroundColor" Value="#9CA3AF" />
+                    </Trigger>
+                </Button.Triggers>
+            </Button>
+            <Label x:Name="HintLabel" Text="Sélectionne un cours pour continuer."
+                   HorizontalOptions="Center" FontSize="12" TextColor="#6B7280" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

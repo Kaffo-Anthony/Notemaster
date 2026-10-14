@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notemaster.Pages.AddNotePage"
+             Title="Ajouter une note"
+             Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Border BackgroundColor="#E8EBFA" Padding="16" StrokeThickness="0">
+                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCameraTapped" /></Border.GestureRecognizers>
+                <VerticalStackLayout>
+                    <Label Text="Prendre une photo" FontAttributes="Bold" TextColor="Black" />
+                    <Label Text="Prends une photo maintenant" TextColor="#4B5563" />
+                </VerticalStackLayout>
+            </Border>
+            <Border BackgroundColor="#E8EBFA" Padding="16" StrokeThickness="0">
+                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnGalleryTapped" /></Border.GestureRecognizers>
+                <VerticalStackLayout>
+                    <Label Text="Importer depuis la galerie" FontAttributes="Bold" TextColor="Black" />
+                    <Label Text="Sélectionne depuis tes photos" TextColor="#4B5563" />
+                </VerticalStackLayout>
+            </Border>
+            <Border BackgroundColor="#E8EBFA" Padding="16" StrokeThickness="0">
+                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTextTapped" /></Border.GestureRecognizers>
+                <VerticalStackLayout>
+                    <Label Text="Texte ou fichier Word" FontAttributes="Bold" TextColor="Black" />
+                    <Label Text="Colle du texte ou importe un document .docx" TextColor="#4B5563" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Conseil : place ton cours bien à plat, avec une bonne lumière naturelle."
+                   FontSize="13" TextColor="#4B5563" />
+
+            <Label Text="Imports récents" FontSize="18" FontAttributes="Bold" Margin="0,8,0,0" />
+            <Label Text="Aucun import récent. Tes notes importées apparaîtront ici." TextColor="#6B7280" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

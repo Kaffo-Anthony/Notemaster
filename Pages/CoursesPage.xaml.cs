@@ -1,21 +1,21 @@
 using Notemaster.Models;
+using Notemaster.Services;
 
 namespace Notemaster.Pages;
 
 public partial class CoursesPage : ContentPage
 {
-    private readonly List<Course> _all = new()
-    {
-        new("Histoire de France", "24 fiches"),
-        new("Biologie Cellulaire", "18 fiches"),
-        new("Mathématiques - Algèbre", "32 fiches"),
-        new("Philosophie - Lumières", "12 fiches"),
-        new("Physique - Mouvement", "8 fiches"),
-    };
+    private readonly List<Course> _all = CourseStore.All;
 
     public CoursesPage()
     {
         InitializeComponent();
+        Refresh("");
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
         Refresh("");
     }
 
@@ -29,5 +29,10 @@ public partial class CoursesPage : ContentPage
     }
 
     private async void OnCreateClicked(object sender, EventArgs e)
-        => await DisplayAlert("Créer un cours", "Fenêtre à venir.", "OK");
+    {
+        var name = await DisplayPromptAsync("Créer un cours", "Nom du cours", "Créer", "Annuler", "Ex : Maths - Chapitre 4");
+        if (string.IsNullOrWhiteSpace(name)) return;
+        CourseStore.All.Add(new Course(name.Trim(), "0 fiche"));
+        Refresh("");
+    }
 }
