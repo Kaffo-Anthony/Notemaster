@@ -2,8 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Notemaster.Pages.ProfilePage"
-             Title="Profil">
-    <VerticalStackLayout Padding="24" Spacing="16">
-        <Label Text="Profil" FontSize="24" FontAttributes="Bold" />
-    </VerticalStackLayout>
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Profil" FontSize="28" FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}" />
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Alex Martin" FontSize="22" FontAttributes="Bold" />
+                <Label Text="alex.martin@univ-demo.fr" />
+                <Label Text="Université de démonstration" />
+            </VerticalStackLayout>
+
+            <Label Text="Statistiques" FontSize="18" FontAttributes="Bold" />
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                <Border Grid.Column="0" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Label Text="5" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                        <Label Text="Cours" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Label Text="94" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                        <Label Text="Fiches" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="2" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Label Text="12" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                        <Label Text="Révisions" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <Label Text="Autorisations" FontSize="18" FontAttributes="Bold" />
+            <Grid ColumnDefinitions="*,Auto"><Label Text="Caméra" VerticalOptions="Center" /><Switch Grid.Column="1" IsToggled="True" /></Grid>
+            <Grid ColumnDefinitions="*,Auto"><Label Text="Galerie" VerticalOptions="Center" /><Switch Grid.Column="1" IsToggled="True" /></Grid>
+            <Grid ColumnDefinitions="*,Auto"><Label Text="Fichiers" VerticalOptions="Center" /><Switch Grid.Column="1" IsToggled="True" /></Grid>
+            <Grid ColumnDefinitions="*,Auto"><Label Text="Notifications" VerticalOptions="Center" /><Switch Grid.Column="1" IsToggled="False" /></Grid>
+
+            <Button Text="Déconnexion" BackgroundColor="Transparent" TextColor="#DC2626"
+                    BorderColor="#DC2626" BorderWidth="1" HeightRequest="48" CornerRadius="12"
+                    Clicked="OnLogoutClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

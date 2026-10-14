@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Notemaster.Models"
              x:Class="Notemaster.Pages.CoursesPage"
-             Title="Mes cours">
-    <VerticalStackLayout Padding="24" Spacing="16">
-        <Label Text="Mes cours" FontSize="24" FontAttributes="Bold" />
-    </VerticalStackLayout>
+             Shell.NavBarIsVisible="False">
+    <Grid Padding="20" RowSpacing="12" RowDefinitions="Auto,Auto,*,Auto">
+        <Label Grid.Row="0" Text="Mes cours" FontSize="28" FontAttributes="Bold"
+               TextColor="{StaticResource Primary}" />
+        <SearchBar Grid.Row="1" Placeholder="Rechercher un cours..." TextChanged="OnSearchChanged" />
+
+        <CollectionView x:Name="CoursesView" Grid.Row="2">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2"
+                                 HorizontalItemSpacing="12" VerticalItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Course">
+                    <Border BackgroundColor="{StaticResource Primary}" Padding="14"
+                            HeightRequest="110" StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="14" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="6" VerticalOptions="End">
+                            <Label Text="{Binding Name}" TextColor="White"
+                                   FontAttributes="Bold" LineBreakMode="WordWrap" />
+                            <Label Text="{Binding Info}" TextColor="White" FontSize="12" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label x:Name="EmptyLabel" Grid.Row="2" IsVisible="False" HorizontalOptions="Center"
+               VerticalOptions="Center" Text="Aucun cours ne correspond à ta recherche." />
+
+        <Button Grid.Row="3" Text="+ Créer un cours" BackgroundColor="{StaticResource Primary}"
+                TextColor="White" HeightRequest="52" CornerRadius="26" Clicked="OnCreateClicked" />
+    </Grid>
 </ContentPage>

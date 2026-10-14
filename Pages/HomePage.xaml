@@ -2,8 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Notemaster.Pages.HomePage"
-             Title="Accueil">
-    <VerticalStackLayout Padding="24" Spacing="16">
-        <Label Text="Accueil" FontSize="24" FontAttributes="Bold" />
-    </VerticalStackLayout>
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Bonjour, Alex" FontSize="28" FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}" />
+            <Label Text="Prêt pour tes révisions ?" />
+            <Button Text="Ajouter une note" BackgroundColor="{StaticResource Primary}"
+                    TextColor="White" HeightRequest="56" CornerRadius="14"
+                    Clicked="OnAddNoteClicked" />
+            <Border BackgroundColor="#E8EBFA" Padding="16" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCoursesTapped" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Mes cours" FontSize="18" FontAttributes="Bold" TextColor="Black" />
+                    <Label Text="5 cours • 94 fiches" TextColor="#4B5563" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
