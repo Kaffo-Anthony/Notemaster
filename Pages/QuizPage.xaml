@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notemaster.Pages.QuizPage"
+             Title="Auto-évaluation"
+             Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <VerticalStackLayout x:Name="LoadingSection" Spacing="12">
+                <Label Text="Génération du quiz en cours" FontSize="20" FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <ActivityIndicator IsRunning="True" Color="{StaticResource Primary}" HeightRequest="40" />
+                <Label Text="Ton quiz se prépare..." HorizontalOptions="Center" TextColor="#6B7280" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="ErrorSection" Spacing="12" IsVisible="False">
+                <Label Text="Échec de la génération" FontSize="20" FontAttributes="Bold"
+                       TextColor="#DC2626" HorizontalOptions="Center" />
+                <Label Text="Impossible de générer le quiz. Vérifie ta connexion et réessaie."
+                       HorizontalTextAlignment="Center" />
+                <Button Text="Réessayer" BackgroundColor="{StaticResource Primary}" TextColor="White"
+                        HeightRequest="48" CornerRadius="12" Clicked="OnRetryLoadClicked" />
+                <Button Text="Annuler" BackgroundColor="Transparent"
+                        TextColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}"
+                        BorderWidth="1" HeightRequest="48" CornerRadius="12" Clicked="OnBackToFicheClicked" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="QuestionSection" Spacing="12" IsVisible="False">
+                <Label x:Name="ProgressLabel" FontSize="13" TextColor="#6B7280" />
+                <ProgressBar x:Name="QuizProgress" ProgressColor="{StaticResource Primary}" />
+                <Label x:Name="QuestionLabel" FontSize="18" FontAttributes="Bold" />
+
+                <RadioButton x:Name="Opt0" GroupName="answers" CheckedChanged="OnOptionChecked" />
+                <RadioButton x:Name="Opt1" GroupName="answers" CheckedChanged="OnOptionChecked" />
+                <RadioButton x:Name="Opt2" GroupName="answers" CheckedChanged="OnOptionChecked" />
+                <RadioButton x:Name="Opt3" GroupName="answers" CheckedChanged="OnOptionChecked" />
+
+                <Border x:Name="FeedbackBox" Padding="12" StrokeThickness="0" IsVisible="False">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <Label x:Name="FeedbackLabel" TextColor="Black" />
+                </Border>
+
+                <Button x:Name="ValidateButton" Text="Valider" IsEnabled="False"
+                        BackgroundColor="{StaticResource Primary}" TextColor="White"
+                        HeightRequest="52" CornerRadius="26" Clicked="OnValidateClicked">
+                    <Button.Triggers>
+                        <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                            <Setter Property="BackgroundColor" Value="#9CA3AF" />
+                        </Trigger>
+                    </Button.Triggers>
+                </Button>
+                <Button x:Name="NextButton" IsVisible="False"
+                        BackgroundColor="{StaticResource Primary}" TextColor="White"
+                        HeightRequest="52" CornerRadius="26" Clicked="OnNextClicked" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="ResultSection" Spacing="14" IsVisible="False">
+                <Label x:Name="ResultTitle" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label x:Name="ScoreLabel" FontSize="44" FontAttributes="Bold"
+                       TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                <Label x:Name="ResultMessage" HorizontalTextAlignment="Center" />
+                <Button Text="Réessayer le quiz" BackgroundColor="{StaticResource Primary}" TextColor="White"
+                        HeightRequest="48" CornerRadius="12" Clicked="OnRetryQuizClicked" />
+                <Button Text="Retour à la fiche" BackgroundColor="Transparent"
+                        TextColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}"
+                        BorderWidth="1" HeightRequest="48" CornerRadius="12" Clicked="OnBackToFicheClicked" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

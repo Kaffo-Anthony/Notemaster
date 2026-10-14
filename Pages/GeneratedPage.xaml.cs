@@ -26,7 +26,8 @@ public partial class GeneratedPage : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is not Fiche fiche) return;
         FichesView.SelectedItem = null;
-        await DisplayAlert(fiche.Title, "Détail de la fiche à venir.", "OK");
+        FicheStore.Selected = fiche;
+        await Shell.Current.GoToAsync("fichedetail");
     }
 
     private async void OnViewCourseClicked(object sender, EventArgs e)

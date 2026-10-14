@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notemaster.Pages.FicheDetailPage"
+             Title="Détail d'une fiche"
+             Shell.TabBarIsVisible="False">
+    <Grid Padding="20" RowSpacing="12" RowDefinitions="Auto,Auto,*,Auto">
+        <Label x:Name="TitleLabel" Grid.Row="0" FontSize="24" FontAttributes="Bold"
+               TextColor="{StaticResource Primary}" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
+            <Button x:Name="SummaryTab" Text="Résumé" HeightRequest="44" CornerRadius="12"
+                    Clicked="OnSummaryTab" />
+            <Button x:Name="KeywordsTab" Grid.Column="1" Text="Mots-clés" HeightRequest="44"
+                    CornerRadius="12" Clicked="OnKeywordsTab" />
+        </Grid>
+
+        <ScrollView Grid.Row="2">
+            <Grid>
+                <Label x:Name="SummaryLabel" />
+                <VerticalStackLayout x:Name="KeywordsLayout" Spacing="10" IsVisible="False" />
+            </Grid>
+        </ScrollView>
+
+        <Button Grid.Row="3" Text="Lancer l'auto-évaluation (facultatif)"
+                BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
+                BorderColor="{StaticResource Primary}" BorderWidth="1"
+                HeightRequest="52" CornerRadius="26" Clicked="OnQuizClicked" />
+    </Grid>
+</ContentPage>

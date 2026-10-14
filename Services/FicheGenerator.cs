@@ -30,7 +30,12 @@ public static class FicheGenerator
             fiches.Add(new Fiche(
                 title,
                 "[Démo] Résumé provisoire : le vrai contenu sera généré par l'IA à partir de ta note.",
-                new List<string> { "Exemple 1", "Exemple 2", "Exemple 3" },
+                new List<Keyword>
+                {
+                    new("Exemple 1", "[Démo] Définition provisoire du mot-clé.", "Élevée"),
+                    new("Exemple 2", "[Démo] Définition provisoire du mot-clé.", "Moyenne"),
+                    new("Exemple 3", "[Démo] Définition provisoire du mot-clé.", "Faible"),
+                    },
                 NoteDraft.CourseName));
         }
         return (fiches, null);
