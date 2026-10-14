@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notemaster.Pages.RecoveryPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Primary}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
+            <Label Text="Récupération" FontSize="28" FontAttributes="Bold"
+                   TextColor="White" HorizontalOptions="Center" />
+
+            <Border BackgroundColor="White" Padding="20" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Mot de passe oublié ?" FontSize="20" FontAttributes="Bold" TextColor="Black" />
+                    <Label Text="Entrez votre email, nous vous enverrons un lien pour réinitialiser votre mot de passe."
+                           TextColor="Black" />
+                    <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" HeightRequest="48"
+                           TextColor="Black" PlaceholderColor="Gray" />
+                    <Label x:Name="MessageLabel" IsVisible="False" />
+                    <Button Text="Envoyer le lien" BackgroundColor="{StaticResource Primary}"
+                            TextColor="White" HeightRequest="48" CornerRadius="12"
+                            Clicked="OnSendClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Retour à la connexion" TextColor="White" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
