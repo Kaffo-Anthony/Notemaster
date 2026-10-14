@@ -9,6 +9,8 @@ public static class NoteDraft
     public static string? FilePath;
     public static string? FileName;
     public static string? Text;
+    public static string CourseName = "";
+    public static string Title = "";
 
     public static void Reset()
     {
@@ -17,6 +19,8 @@ public static class NoteDraft
         FilePath = null;
         FileName = null;
         Text = null;
+        CourseName = "";
+        Title = "";
     }
 
     public static async Task<string> SavePhotoAsync(FileResult photo)

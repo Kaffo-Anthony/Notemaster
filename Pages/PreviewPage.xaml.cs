@@ -135,7 +135,7 @@ public partial class PreviewPage : ContentPage
                 return;
             }
             name = name.Trim();
-            CourseStore.All.Add(new Course(name, "0 fiche"));
+            CourseStore.All.Add(new Course(name));
             LoadCourses(name);
             return;
         }
@@ -145,5 +145,11 @@ public partial class PreviewPage : ContentPage
     }
 
     private async void OnGenerateClicked(object sender, EventArgs e)
-        => await DisplayAlert("Génération", "Écran de traitement à venir.", "OK");
+    {
+        NoteDraft.CourseName = CoursePicker.SelectedItem?.ToString() ?? "";
+        NoteDraft.Title = TitleEntry.Text?.Trim() ?? "";
+        await Shell.Current.GoToAsync("processing");
+        
+    }
+       
 }

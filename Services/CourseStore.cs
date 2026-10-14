@@ -4,12 +4,14 @@ namespace Notemaster.Services;
 
 public static class CourseStore
 {
+    public static string Current { get; set; } = "";
+
     public static List<Course> All { get; } = new()
     {
-        new("Histoire de France", "24 fiches"),
-        new("Biologie Cellulaire", "18 fiches"),
-        new("Mathématiques - Algèbre", "32 fiches"),
-        new("Philosophie - Lumières", "12 fiches"),
-        new("Physique - Mouvement", "8 fiches"),
+        new("Histoire de France"),
+        new("Biologie Cellulaire"),
+        new("Mathématiques - Algèbre"),
+        new("Philosophie - Lumières"),
+        new("Physique - Mouvement"),
     };
 }

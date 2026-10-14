@@ -12,6 +12,9 @@ namespace Notemaster
              Routing.RegisterRoute("addnote", typeof(Pages.AddNotePage));
              Routing.RegisterRoute("textinput", typeof(Pages.TextInputPage));
              Routing.RegisterRoute("preview", typeof(Pages.PreviewPage));
+             Routing.RegisterRoute("processing", typeof(Pages.ProcessingPage));
+             Routing.RegisterRoute("generated", typeof(Pages.GeneratedPage));
+             Routing.RegisterRoute("coursefiches", typeof(Pages.CourseFichesPage));
            
             var currentTheme = Application.Current!.RequestedTheme;
             ThemeSegmentedControl.SelectedIndex = currentTheme == AppTheme.Light ? 0 : 1;

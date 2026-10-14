@@ -9,7 +9,7 @@
                TextColor="{StaticResource Primary}" />
         <SearchBar Grid.Row="1" Placeholder="Rechercher un cours..." TextChanged="OnSearchChanged" />
 
-        <CollectionView x:Name="CoursesView" Grid.Row="2">
+        <CollectionView x:Name="CoursesView" Grid.Row="2" SelectionMode="Single" SelectionChanged="OnCourseSelected">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2"
                                  HorizontalItemSpacing="12" VerticalItemSpacing="12" />
