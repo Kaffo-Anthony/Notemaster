@@ -8,9 +8,9 @@
             <Label Text="Profil" FontSize="28" FontAttributes="Bold"
                    TextColor="{StaticResource Primary}" />
             <VerticalStackLayout Spacing="2">
-                <Label Text="Alex Martin" FontSize="22" FontAttributes="Bold" />
-                <Label Text="alex.martin@univ-demo.fr" />
-                <Label Text="Université de démonstration" />
+                <Label x:Name="NameLabel" FontSize="22" FontAttributes="Bold" />
+                <Label x:Name="EmailLabel" />
+                <Label x:Name="SchoolLabel" />
             </VerticalStackLayout>
 
             <Label Text="Statistiques" FontSize="18" FontAttributes="Bold" />
@@ -18,15 +18,15 @@
                 <Border Grid.Column="0" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout HorizontalOptions="Center">
-                        <Label Text="5" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                        <Label x:Name="CoursesCount" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
                         <Label Text="Cours" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
                 <Border Grid.Column="1" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout HorizontalOptions="Center">
-                        <Label Text="94" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                        <Label Text="Fiches" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
+                        <Label x:Name="FichesCount" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                        <Label x:Name="QuizCount" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
                 <Border Grid.Column="2" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">

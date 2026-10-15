@@ -25,7 +25,19 @@ public partial class CoursesPage : ContentPage
     {
         var list = _all.Where(c => c.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
         CoursesView.ItemsSource = list;
-        EmptyLabel.IsVisible = list.Count == 0;
+        EmptyBox.IsVisible = list.Count == 0;
+
+        if (_all.Count == 0)
+        {
+        EmptyTitle.Text = "Aucun cours pour le moment";
+        EmptyText.Text = "Crée ton premier cours pour organiser tes fiches et révisions.";
+        }
+        else
+        {
+        EmptyTitle.Text = "Aucun résultat";
+        EmptyText.Text = $"Aucun cours ne correspond à « {query} ».";
+        }
+
     }
 
     private async void OnCreateClicked(object sender, EventArgs e)

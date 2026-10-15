@@ -5,7 +5,7 @@
              Shell.NavBarIsVisible="False">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
-            <Label Text="Bonjour, Alex" FontSize="28" FontAttributes="Bold"
+            <Label x:Name="GreetingLabel" Text="Bonjour" FontSize="28" FontAttributes="Bold"
                    TextColor="{StaticResource Primary}" />
             <Label Text="Prêt pour tes révisions ?" />
             <Button Text="Ajouter une note" BackgroundColor="{StaticResource Primary}"
@@ -20,7 +20,7 @@
                 </Border.GestureRecognizers>
                 <VerticalStackLayout Spacing="2">
                     <Label Text="Mes cours" FontSize="18" FontAttributes="Bold" TextColor="Black" />
-                    <Label Text="5 cours • 94 fiches" TextColor="#4B5563" />
+                    <Label x:Name="CoursesInfoLabel" TextColor="#4B5563" />
                 </VerticalStackLayout>
             </Border>
         </VerticalStackLayout>

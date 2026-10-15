@@ -31,8 +31,13 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Label x:Name="EmptyLabel" Grid.Row="2" IsVisible="False" HorizontalOptions="Center"
-               VerticalOptions="Center" Text="Aucun cours ne correspond à ta recherche." />
+        <VerticalStackLayout x:Name="EmptyBox" Grid.Row="2" IsVisible="False"
+                     VerticalOptions="Center" Spacing="8">
+           <Label x:Name="EmptyTitle" FontSize="20" FontAttributes="Bold"
+           HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+           <Label x:Name="EmptyText" HorizontalOptions="Center"
+           HorizontalTextAlignment="Center" TextColor="#6B7280" />
+        </VerticalStackLayout>
 
         <Button Grid.Row="3" Text="+ Créer un cours" BackgroundColor="{StaticResource Primary}"
                 TextColor="White" HeightRequest="52" CornerRadius="26" Clicked="OnCreateClicked" />
