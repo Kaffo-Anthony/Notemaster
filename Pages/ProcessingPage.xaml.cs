@@ -35,6 +35,7 @@ public partial class ProcessingPage : ContentPage
 
         FicheStore.All.AddRange(result.Fiches!);
         FicheStore.LastBatch = result.Fiches!;
+        DataStore.Save();
         await Shell.Current.GoToAsync("../generated");
     }
 

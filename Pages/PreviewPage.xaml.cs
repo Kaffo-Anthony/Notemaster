@@ -136,6 +136,7 @@ public partial class PreviewPage : ContentPage
             }
             name = name.Trim();
             CourseStore.All.Add(new Course(name));
+            DataStore.Save();
             LoadCourses(name);
             return;
         }

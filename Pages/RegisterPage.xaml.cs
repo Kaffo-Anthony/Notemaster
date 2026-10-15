@@ -29,6 +29,7 @@ public partial class RegisterPage : ContentPage
         UserSession.Name = name;
         UserSession.Email = email;
         UserSession.School = school;
+        DataStore.Load(email);
         await Shell.Current.GoToAsync("//home");
     }
 

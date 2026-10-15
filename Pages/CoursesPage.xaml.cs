@@ -45,6 +45,7 @@ public partial class CoursesPage : ContentPage
         var name = await DisplayPromptAsync("Créer un cours", "Nom du cours", "Créer", "Annuler", "Ex : Maths - Chapitre 4");
         if (string.IsNullOrWhiteSpace(name)) return;
         CourseStore.All.Add(new Course(name.Trim()));
+        DataStore.Save();
         Refresh("");
     }
     

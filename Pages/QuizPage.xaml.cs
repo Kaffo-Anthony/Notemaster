@@ -140,6 +140,7 @@ public partial class QuizPage : ContentPage
     private void ShowResult()
     {
         UserSession.QuizzesDone++;
+        DataStore.Save();
         int percent = _score * 100 / _questions.Count;
         ScoreLabel.Text = $"{_score}/{_questions.Count}";
 

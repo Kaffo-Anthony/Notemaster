@@ -35,6 +35,7 @@ public partial class LoginPage : ContentPage
         UserSession.Email = email;
         UserSession.Name = account.Name;
         UserSession.School = account.School;
+        DataStore.Load(email);
         await Shell.Current.GoToAsync("//home");
     }
 
