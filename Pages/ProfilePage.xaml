@@ -26,13 +26,13 @@
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout HorizontalOptions="Center">
                         <Label x:Name="FichesCount" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                        <Label x:Name="QuizCount" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
+                        <Label Text="Fiches" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
                 <Border Grid.Column="2" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout HorizontalOptions="Center">
-                        <Label Text="12" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                        <Label x:Name="QuizCount" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
                         <Label Text="Révisions" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
