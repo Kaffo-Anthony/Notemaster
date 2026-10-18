@@ -1,51 +1,119 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              x:Class="Notemaster.Pages.ProfilePage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource NMBackground}">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="16">
-            <Label Text="Profil" FontSize="28" FontAttributes="Bold"
-                   TextColor="{StaticResource Primary}" />
-            <VerticalStackLayout Spacing="2">
-                <Label x:Name="NameLabel" FontSize="22" FontAttributes="Bold" />
-                <Label x:Name="EmailLabel" />
-                <Label x:Name="SchoolLabel" />
+        <VerticalStackLayout Padding="20,32,20,24" Spacing="18"
+                             WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}"
+                             HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+
+            <Label Text="Profil" Style="{StaticResource NMScreenTitle}" FontSize="34" />
+
+            <!-- Identité -->
+            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                <Border WidthRequest="96" HeightRequest="96" BackgroundColor="{StaticResource NMSoft}"
+                        StrokeThickness="0" HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="48" />
+                    </Border.StrokeShape>
+                    <Label Style="{StaticResource NMIconGlyph}" FontSize="46"
+                           Text="{x:Static f:FluentUI.person_24_regular}" />
+                </Border>
+                <Label x:Name="NameLabel" Style="{StaticResource NMScreenTitle}" FontSize="24"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                <Border BackgroundColor="{StaticResource NMSoft}" StrokeThickness="0" Padding="12,6"
+                        HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Style="{StaticResource NMIconGlyph}" FontSize="18" VerticalOptions="Center"
+                               Text="{x:Static f:FluentUI.building_24_regular}" />
+                        <Label x:Name="SchoolLabel" Style="{StaticResource NMBody}" FontSize="13"
+                               TextColor="{StaticResource NMInk}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
             </VerticalStackLayout>
 
-            <Label Text="Statistiques" FontSize="18" FontAttributes="Bold" />
+            <!-- Email -->
+            <Border Style="{StaticResource NMCard}" Padding="14">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                    <Label Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                           Text="{x:Static f:FluentUI.mail_24_regular}" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                        <Label Text="Email" Style="{StaticResource NMMuted}" FontSize="12" />
+                        <Label x:Name="EmailLabel" Style="{StaticResource NMBody}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Statistiques -->
+            <Label Text="Statistiques" Style="{StaticResource NMSectionTitle}" />
             <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
-                <Border Grid.Column="0" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
-                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
-                    <VerticalStackLayout HorizontalOptions="Center">
-                        <Label x:Name="CoursesCount" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                        <Label Text="Cours" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
+                <Border Grid.Column="0" Style="{StaticResource NMCard}" Padding="10,14">
+                    <VerticalStackLayout Spacing="4">
+                        <Label x:Name="CoursesCount" Style="{StaticResource NMScreenTitle}" FontSize="26"
+                               HorizontalOptions="Center" />
+                        <Label Text="Cours" Style="{StaticResource NMMuted}" FontSize="12"
+                               HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </Border>
-                <Border Grid.Column="1" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
-                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
-                    <VerticalStackLayout HorizontalOptions="Center">
-                        <Label x:Name="FichesCount" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                        <Label Text="Fiches" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
+                <Border Grid.Column="1" Style="{StaticResource NMCard}" Padding="10,14">
+                    <VerticalStackLayout Spacing="4">
+                        <Label x:Name="FichesCount" Style="{StaticResource NMScreenTitle}" FontSize="26"
+                               HorizontalOptions="Center" />
+                        <Label Text="Fiches créées" Style="{StaticResource NMMuted}" FontSize="12"
+                               HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </Border>
-                <Border Grid.Column="2" BackgroundColor="#E8EBFA" Padding="10" StrokeThickness="0">
-                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
-                    <VerticalStackLayout HorizontalOptions="Center">
-                        <Label x:Name="QuizCount" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                        <Label Text="Révisions" FontSize="12" TextColor="#4B5563" HorizontalOptions="Center" />
+                <Border Grid.Column="2" Style="{StaticResource NMCard}" Padding="10,14">
+                    <VerticalStackLayout Spacing="4">
+                        <Label x:Name="QuizCount" Style="{StaticResource NMScreenTitle}" FontSize="26"
+                               HorizontalOptions="Center" />
+                        <Label Text="Révisions" Style="{StaticResource NMMuted}" FontSize="12"
+                               HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </Border>
             </Grid>
 
-            <Label Text="Autorisations" FontSize="18" FontAttributes="Bold" />
-            <Grid ColumnDefinitions="*,Auto"><Label Text="Caméra" VerticalOptions="Center" /><Switch Grid.Column="1" IsToggled="True" /></Grid>
-            <Grid ColumnDefinitions="*,Auto"><Label Text="Galerie" VerticalOptions="Center" /><Switch Grid.Column="1" IsToggled="True" /></Grid>
-            <Grid ColumnDefinitions="*,Auto"><Label Text="Fichiers" VerticalOptions="Center" /><Switch Grid.Column="1" IsToggled="True" /></Grid>
-            <Grid ColumnDefinitions="*,Auto"><Label Text="Notifications" VerticalOptions="Center" /><Switch Grid.Column="1" IsToggled="False" /></Grid>
+            <!-- Autorisations -->
+            <Label Text="Autorisations" Style="{StaticResource NMSectionTitle}" />
+            <Border Style="{StaticResource NMCard}" Padding="16,6">
+                <VerticalStackLayout>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" Padding="0,10">
+                        <Label Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                               Text="{x:Static f:FluentUI.camera_24_regular}" />
+                        <Label Grid.Column="1" Text="Caméra" Style="{StaticResource NMBody}" VerticalOptions="Center" />
+                        <Switch Grid.Column="2" IsToggled="True" OnColor="{StaticResource Primary}" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="{StaticResource NMLine}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" Padding="0,10">
+                        <Label Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                               Text="{x:Static f:FluentUI.image_24_regular}" />
+                        <Label Grid.Column="1" Text="Galerie" Style="{StaticResource NMBody}" VerticalOptions="Center" />
+                        <Switch Grid.Column="2" IsToggled="True" OnColor="{StaticResource Primary}" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="{StaticResource NMLine}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" Padding="0,10">
+                        <Label Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                               Text="{x:Static f:FluentUI.folder_24_regular}" />
+                        <Label Grid.Column="1" Text="Fichiers" Style="{StaticResource NMBody}" VerticalOptions="Center" />
+                        <Switch Grid.Column="2" IsToggled="True" OnColor="{StaticResource Primary}" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="{StaticResource NMLine}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" Padding="0,10">
+                        <Label Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                               Text="{x:Static f:FluentUI.alert_24_regular}" />
+                        <Label Grid.Column="1" Text="Notifications" Style="{StaticResource NMBody}" VerticalOptions="Center" />
+                        <Switch Grid.Column="2" IsToggled="False" OnColor="{StaticResource Primary}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
-            <Button Text="Déconnexion" BackgroundColor="Transparent" TextColor="#DC2626"
-                    BorderColor="#DC2626" BorderWidth="1" HeightRequest="48" CornerRadius="12"
+            <Button Text="Déconnexion" Style="{StaticResource NMDangerButton}" Margin="0,4,0,0"
                     Clicked="OnLogoutClicked" />
         </VerticalStackLayout>
     </ScrollView>

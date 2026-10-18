@@ -20,6 +20,12 @@ public partial class QuizPage : ContentPage
         {
             Command = new Command(async () => await ConfirmQuit())
         });
+
+    QuestionSection.SizeChanged += (s, e) =>
+        {
+            if (QuestionSection.Width <= 0) return;
+            foreach (var o in _options) o.WidthRequest = QuestionSection.Width;
+        };
     }
 
     protected override async void OnAppearing()
@@ -90,14 +96,14 @@ public partial class QuizPage : ContentPage
             _options[i].IsChecked = false;
             _options[i].IsEnabled = true;
             _options[i].IsVisible = i < q.Options.Count;
-            _options[i].Content = i < q.Options.Count ? q.Options[i] : "";
-        }
+            _options[i].Content = i < q.Options.Count ? $"{(char)('A' + i)}) {q.Options[i]}" : "";
 
         FeedbackBox.IsVisible = false;
         NextButton.IsVisible = false;
         ValidateButton.IsVisible = true;
         ValidateButton.IsEnabled = false;
         ShowSection("question");
+        }
     }
 
     private void OnOptionChecked(object sender, CheckedChangedEventArgs e)
@@ -106,24 +112,28 @@ public partial class QuizPage : ContentPage
     private void OnValidateClicked(object sender, EventArgs e)
     {
         var q = _questions[_index];
-        int chosen = Array.FindIndex(_options, o => o.IsChecked);
-        if (chosen < 0) return;
+    int chosen = Array.FindIndex(_options, o => o.IsChecked);
+    if (chosen < 0) return;
 
-        _validated = true;
-        bool ok = chosen == q.CorrectIndex;
-        if (ok) _score++;
+    _validated = true;
+    bool ok = chosen == q.CorrectIndex;
+    if (ok) _score++;
 
-        foreach (var o in _options) o.IsEnabled = false;
+    foreach (var o in _options) o.IsEnabled = false;
 
-        FeedbackBox.BackgroundColor = Color.FromArgb(ok ? "#D1FAE5" : "#FEE2E2");
-        FeedbackLabel.Text = ok
-            ? $"Correct !\n{q.Explanation}"
-            : $"Incorrect. Bonne réponse : {q.Options[q.CorrectIndex]}\n{q.Explanation}";
-        FeedbackBox.IsVisible = true;
+    FeedbackBox.BackgroundColor = Color.FromArgb(ok ? "#DCFCE7" : "#FEE2E2");
+    FeedbackBox.Stroke = Color.FromArgb(ok ? "#86EFAC" : "#FCA5A5");
+    var fs = new FormattedString();
+    fs.Spans.Add(new Span { Text = ok ? "Correct !" : "Incorrect", FontFamily = "OpenSansSemibold", FontSize = 18, TextColor = Color.FromArgb(ok ? "#15803D" : "#B91C1C") });
+    if (!ok)
+        fs.Spans.Add(new Span { Text = $"\nBonne réponse : {q.Options[q.CorrectIndex]}", FontFamily = "OpenSansSemibold", FontSize = 15, TextColor = Color.FromArgb("#15803D") });
+    fs.Spans.Add(new Span { Text = $"\n{q.Explanation}", FontSize = 14, TextColor = Color.FromArgb("#1F2340") });
+    FeedbackLabel.FormattedText = fs;
+    FeedbackBox.IsVisible = true;
 
-        ValidateButton.IsVisible = false;
-        NextButton.Text = _index == _questions.Count - 1 ? "Voir le résultat" : "Question suivante";
-        NextButton.IsVisible = true;
+    ValidateButton.IsVisible = false;
+    NextButton.Text = _index == _questions.Count - 1 ? "Voir le résultat" : "Question suivante";
+    NextButton.IsVisible = true;
     }
 
     private void OnNextClicked(object sender, EventArgs e)
