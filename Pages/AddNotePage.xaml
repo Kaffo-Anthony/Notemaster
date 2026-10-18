@@ -1,41 +1,114 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              x:Class="Notemaster.Pages.AddNotePage"
-             Title="Ajouter une note"
-             Shell.TabBarIsVisible="False">
+             Title="Importer une note"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource NMBackground}">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="12">
-            <Border BackgroundColor="#E8EBFA" Padding="16" StrokeThickness="0">
-                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCameraTapped" /></Border.GestureRecognizers>
-                <VerticalStackLayout>
-                    <Label Text="Prendre une photo" FontAttributes="Bold" TextColor="Black" />
-                    <Label Text="Prends une photo maintenant" TextColor="#4B5563" />
-                </VerticalStackLayout>
-            </Border>
-            <Border BackgroundColor="#E8EBFA" Padding="16" StrokeThickness="0">
-                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnGalleryTapped" /></Border.GestureRecognizers>
-                <VerticalStackLayout>
-                    <Label Text="Importer depuis la galerie" FontAttributes="Bold" TextColor="Black" />
-                    <Label Text="Sélectionne depuis tes photos" TextColor="#4B5563" />
-                </VerticalStackLayout>
-            </Border>
-            <Border BackgroundColor="#E8EBFA" Padding="16" StrokeThickness="0">
-                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTextTapped" /></Border.GestureRecognizers>
-                <VerticalStackLayout>
-                    <Label Text="Texte ou fichier Word" FontAttributes="Bold" TextColor="Black" />
-                    <Label Text="Colle du texte ou importe un document .docx" TextColor="#4B5563" />
-                </VerticalStackLayout>
+        <VerticalStackLayout Padding="20,16,20,24" Spacing="14"
+                             WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}"
+                             HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+
+            <!-- Choix 1 : photo -->
+            <Border Style="{StaticResource NMCard}" Padding="14">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCameraTapped" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Border WidthRequest="52" HeightRequest="52" BackgroundColor="{StaticResource Primary}"
+                            StrokeThickness="0" VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="26" />
+                        </Border.StrokeShape>
+                        <Label Style="{StaticResource NMIconGlyph}" TextColor="White" FontSize="26"
+                               Text="{x:Static f:FluentUI.camera_24_regular}" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label Text="Prendre une photo" Style="{StaticResource NMSectionTitle}" FontSize="16" />
+                        <Label Text="Prends une photo maintenant" Style="{StaticResource NMMuted}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                           TextColor="{StaticResource NMMutedColor}"
+                           Text="{x:Static f:FluentUI.chevron_right_24_regular}" />
+                </Grid>
             </Border>
 
-            <Label Text="Conseil : place ton cours bien à plat, avec une bonne lumière naturelle."
-                   FontSize="13" TextColor="#4B5563" />
+            <!-- Choix 2 : galerie -->
+            <Border Style="{StaticResource NMCard}" Padding="14">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGalleryTapped" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Border WidthRequest="52" HeightRequest="52" BackgroundColor="{StaticResource Primary}"
+                            StrokeThickness="0" VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="26" />
+                        </Border.StrokeShape>
+                        <Label Style="{StaticResource NMIconGlyph}" TextColor="White" FontSize="26"
+                               Text="{x:Static f:FluentUI.image_24_regular}" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label Text="Importer depuis la galerie" Style="{StaticResource NMSectionTitle}" FontSize="16" />
+                        <Label Text="Sélectionne depuis tes photos" Style="{StaticResource NMMuted}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                           TextColor="{StaticResource NMMutedColor}"
+                           Text="{x:Static f:FluentUI.chevron_right_24_regular}" />
+                </Grid>
+            </Border>
 
-            <Label Text="Imports récents" FontSize="18" FontAttributes="Bold" Margin="0,8,0,0" />
-            <Label Text="Aucun import récent. Tes notes importées apparaîtront ici." TextColor="#6B7280" />
+            <!-- Choix 3 : texte ou fichier Word -->
+            <Border Style="{StaticResource NMCard}" Padding="14">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTextTapped" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Border WidthRequest="52" HeightRequest="52" BackgroundColor="{StaticResource Primary}"
+                            StrokeThickness="0" VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="26" />
+                        </Border.StrokeShape>
+                        <Label Style="{StaticResource NMIconGlyph}" TextColor="White" FontSize="26"
+                               Text="{x:Static f:FluentUI.document_24_regular}" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label Text="Texte ou fichier Word" Style="{StaticResource NMSectionTitle}" FontSize="16" />
+                        <Label Text="Colle du texte ou importe un document .docx" Style="{StaticResource NMMuted}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                           TextColor="{StaticResource NMMutedColor}"
+                           Text="{x:Static f:FluentUI.chevron_right_24_regular}" />
+                </Grid>
+            </Border>
+
+            <!-- Conseil de capture -->
+            <Border BackgroundColor="{StaticResource NMSoft}" StrokeThickness="0" Padding="14">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Label Style="{StaticResource NMIconGlyph}" VerticalOptions="Start"
+                           Text="{x:Static f:FluentUI.lightbulb_24_regular}" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                        <Label Text="Conseil" Style="{StaticResource NMFieldLabel}" />
+                        <Label Text="Place ton cours bien à plat, avec une bonne lumière naturelle, pour une capture nette."
+                               Style="{StaticResource NMBody}" FontSize="13" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Imports récents (état vide : la liste n'est pas encore alimentée) -->
+            <Label Text="Imports récents" Style="{StaticResource NMSectionTitle}" Margin="0,10,0,0" />
+            <VerticalStackLayout Spacing="6" Margin="0,6,0,0">
+                <Label Style="{StaticResource NMIconGlyph}" FontSize="64" Opacity="0.75"
+                       Text="{x:Static f:FluentUI.folder_open_24_regular}" />
+                <Label Text="Aucun import récent" Style="{StaticResource NMSectionTitle}" FontSize="16"
+                       HorizontalOptions="Center" />
+                <Label Text="Tes notes importées apparaîtront ici." Style="{StaticResource NMMuted}"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

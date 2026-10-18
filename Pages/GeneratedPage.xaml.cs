@@ -37,4 +37,6 @@ public partial class GeneratedPage : ContentPage
         await Shell.Current.GoToAsync("//courses");
         await Shell.Current.GoToAsync("coursefiches");
     }
+
+    private async void OnDoneClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync("//home");
 }

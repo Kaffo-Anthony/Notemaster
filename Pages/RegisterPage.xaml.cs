@@ -33,5 +33,14 @@ public partial class RegisterPage : ContentPage
         await Shell.Current.GoToAsync("//home");
     }
 
+    // Interface uniquement : afficher / masquer les mots de passe
+    private void OnTogglePasswordTapped(object sender, TappedEventArgs e)
+    {
+        bool hide = !PasswordEntry.IsPassword;
+        PasswordEntry.IsPassword = hide;
+        ConfirmEntry.IsPassword = hide;
+        PasswordEye.Text = hide ? FluentUI.eye_24_regular : FluentUI.eye_off_24_regular;
+    }
+
     private async void OnBackTapped(object sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//login");
 }

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- NoteMaster : design de l'interface, fidèle aux maquettes.
+     Fichier AJOUTÉ : il ne remplace ni Colors.xaml, ni Styles.xaml, ni AppStyles.xaml.
+     Il doit être fusionné APRÈS eux dans App.xaml. -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:f="clr-namespace:Fonts">
+
+    <!-- ===== Couleurs (la couleur principale reste "Primary" de Colors.xaml : #3F4FC4) ===== -->
+    <Color x:Key="NMBackground">#EEF0FD</Color>
+    <Color x:Key="NMPageColor">#F4F5F9</Color>
+    <Color x:Key="NMSoft">#DDE3FB</Color>
+    <Color x:Key="NMFieldColor">#F3F4FA</Color>
+    <Color x:Key="NMLine">#E3E6F3</Color>
+    <Color x:Key="NMInk">#14124A</Color>
+    <Color x:Key="NMText">#1F2340</Color>
+    <Color x:Key="NMMutedColor">#6B7280</Color>
+    <Color x:Key="NMDisabled">#A9AEC0</Color>
+    <Color x:Key="NMDanger">#DC2626</Color>
+    <Color x:Key="NMDangerSoft">#FEE2E2</Color>
+    <Color x:Key="NMSuccess">#15803D</Color>
+    <Color x:Key="NMSuccessSoft">#DCFCE7</Color>
+    <Color x:Key="NMWarning">#EA7A1A</Color>
+
+    <!-- ===== Icônes de la barre d'onglets ===== -->
+    <FontImageSource x:Key="NMIconHome" FontFamily="{x:Static f:FluentUI.FontFamily}"
+                     Glyph="{x:Static f:FluentUI.home_24_regular}" Color="{StaticResource Primary}" Size="24" />
+    <FontImageSource x:Key="NMIconCourses" FontFamily="{x:Static f:FluentUI.FontFamily}"
+                     Glyph="{x:Static f:FluentUI.book_open_24_regular}" Color="{StaticResource Primary}" Size="24" />
+    <FontImageSource x:Key="NMIconProfile" FontFamily="{x:Static f:FluentUI.FontFamily}"
+                     Glyph="{x:Static f:FluentUI.person_24_regular}" Color="{StaticResource Primary}" Size="24" />
+
+    <!-- ===== Textes ===== -->
+    <Style x:Key="NMScreenTitle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="TextColor" Value="{StaticResource NMInk}" />
+    </Style>
+    <Style x:Key="NMHeroTitle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="TextColor" Value="White" />
+    </Style>
+    <Style x:Key="NMSectionTitle" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="TextColor" Value="{StaticResource NMInk}" />
+    </Style>
+    <Style x:Key="NMBody" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor" Value="{StaticResource NMText}" />
+    </Style>
+    <Style x:Key="NMMuted" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource NMMutedColor}" />
+    </Style>
+    <Style x:Key="NMFieldLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource NMInk}" />
+    </Style>
+    <Style x:Key="NMLink" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+    </Style>
+    <Style x:Key="NMErrorLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource NMDanger}" />
+    </Style>
+    <Style x:Key="NMIconGlyph" TargetType="Label">
+        <Setter Property="FontFamily" Value="{x:Static f:FluentUI.FontFamily}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <!-- ===== Champs de saisie ===== -->
+    <Style x:Key="NMField" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource NMFieldColor}" />
+        <Setter Property="Stroke" Value="{StaticResource NMLine}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="14,0" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="12" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="NMEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource NMText}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource NMMutedColor}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- ===== Cartes ===== -->
+    <Style x:Key="NMCard" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Stroke" Value="{StaticResource NMLine}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="20" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="#3F4FC4" Opacity="0.10" Radius="16" Offset="0,6" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Boutons ===== -->
+    <Style x:Key="NMPrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource NMDisabled}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+    <Style x:Key="NMOutlineButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+        <Setter Property="BorderWidth" Value="1.5" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BorderColor" Value="{StaticResource NMDisabled}" />
+                            <Setter Property="TextColor" Value="{StaticResource NMDisabled}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+    <Style x:Key="NMDangerButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource NMDanger}" />
+        <Setter Property="BorderColor" Value="{StaticResource NMDanger}" />
+        <Setter Property="BorderWidth" Value="1.5" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="52" />
+    </Style>
+</ResourceDictionary>

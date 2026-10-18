@@ -1,47 +1,111 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              x:Class="Notemaster.Pages.RegisterPage"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource Primary}">
+             BackgroundColor="{StaticResource NMPageColor}">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
-            <Label Text="Inscription" FontSize="28" FontAttributes="Bold"
-                   TextColor="White" HorizontalOptions="Center" />
+        <!-- Fond en deux tons : bandeau bleu (230) puis zone claire ; la carte chevauche la frontière -->
+        <Grid RowDefinitions="230,Auto">
+            <BoxView Grid.Row="0" Color="{StaticResource Primary}" />
 
-            <Border BackgroundColor="White" Padding="20" StrokeThickness="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="16" />
-                </Border.StrokeShape>
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="Créez votre compte" FontSize="20" FontAttributes="Bold" TextColor="Black" />
-                    <Entry x:Name="NameEntry" Placeholder="Nom" HeightRequest="48"
-                           TextColor="Black" PlaceholderColor="Gray" />
-                    <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" HeightRequest="48"
-                           TextColor="Black" PlaceholderColor="Gray" />
-                    <Entry x:Name="SchoolEntry" Placeholder="Établissement" HeightRequest="48"
-                           TextColor="Black" PlaceholderColor="Gray" />
-                    <Entry x:Name="PasswordEntry" Placeholder="Mot de passe" IsPassword="True"
-                           HeightRequest="48" TextColor="Black" PlaceholderColor="Gray" />
-                    <Entry x:Name="ConfirmEntry" Placeholder="Confirmation du mot de passe" IsPassword="True"
-                           HeightRequest="48" TextColor="Black" PlaceholderColor="Gray" />
-                    <HorizontalStackLayout Spacing="8">
-                        <CheckBox x:Name="TermsCheck" Color="{StaticResource Primary}" />
-                        <Label Text="J'accepte les conditions d'utilisation" TextColor="Black"
-                               VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                    <Label x:Name="ErrorLabel" TextColor="#DC2626" IsVisible="False" />
-                    <Button Text="Créer le compte" BackgroundColor="{StaticResource Primary}"
-                            TextColor="White" HeightRequest="48" CornerRadius="12"
-                            Clicked="OnCreateClicked" />
-                </VerticalStackLayout>
-            </Border>
+            <!-- En-tête : retour et titre -->
+            <Grid Grid.Row="0" ColumnDefinitions="48,*,48" Padding="12,28,12,0" VerticalOptions="Start"
+                  WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}" HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+                <Label Style="{StaticResource NMIconGlyph}" TextColor="White" FontSize="26"
+                       HorizontalOptions="Start" WidthRequest="44" HeightRequest="44"
+                       Text="{x:Static f:FluentUI.chevron_left_24_regular}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Column="1" Text="Inscription" Style="{StaticResource NMHeroTitle}"
+                       FontSize="26" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Grid>
 
-            <Label Text="Déjà un compte ? Se connecter" TextColor="White" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnBackTapped" />
-                </Label.GestureRecognizers>
-            </Label>
-        </VerticalStackLayout>
+            <!-- Carte d'inscription + lien de connexion -->
+            <VerticalStackLayout Grid.RowSpan="2" Margin="24,110,24,32" Spacing="22" VerticalOptions="Start"
+                                 WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}" HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+                <Border Style="{StaticResource NMCard}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Créez votre compte" Style="{StaticResource NMSectionTitle}"
+                               FontSize="22" HorizontalOptions="Center" />
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Nom" Style="{StaticResource NMFieldLabel}" />
+                            <Border Style="{StaticResource NMField}">
+                                <Entry x:Name="NameEntry" Style="{StaticResource NMEntry}" Placeholder="Marie Laurent" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Email" Style="{StaticResource NMFieldLabel}" />
+                            <Border Style="{StaticResource NMField}">
+                                <Entry x:Name="EmailEntry" Style="{StaticResource NMEntry}"
+                                       Placeholder="prenom.nom@universite.fr" Keyboard="Email" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Établissement" Style="{StaticResource NMFieldLabel}" />
+                            <Border Style="{StaticResource NMField}">
+                                <Entry x:Name="SchoolEntry" Style="{StaticResource NMEntry}"
+                                       Placeholder="Université de Lyon" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Mot de passe" Style="{StaticResource NMFieldLabel}" />
+                            <Border Style="{StaticResource NMField}">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <Entry x:Name="PasswordEntry" Style="{StaticResource NMEntry}"
+                                           Placeholder="6 caractères minimum" IsPassword="True" />
+                                    <Label x:Name="PasswordEye" Grid.Column="1" Style="{StaticResource NMIconGlyph}"
+                                           TextColor="{StaticResource NMMutedColor}"
+                                           Text="{x:Static f:FluentUI.eye_24_regular}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnTogglePasswordTapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Confirmation du mot de passe" Style="{StaticResource NMFieldLabel}" />
+                            <Border Style="{StaticResource NMField}">
+                                <Entry x:Name="ConfirmEntry" Style="{StaticResource NMEntry}"
+                                       Placeholder="Retapez le mot de passe" IsPassword="True" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <HorizontalStackLayout Spacing="6">
+                            <CheckBox x:Name="TermsCheck" Color="{StaticResource Primary}" VerticalOptions="Center" />
+                            <Label Text="J'accepte les conditions d'utilisation" Style="{StaticResource NMBody}"
+                                   FontSize="14" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <Label x:Name="ErrorLabel" Style="{StaticResource NMErrorLabel}" IsVisible="False" />
+
+                        <Button Text="Créer le compte" Style="{StaticResource NMPrimaryButton}"
+                                Clicked="OnCreateClicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Déjà un compte ? " TextColor="{StaticResource NMMutedColor}" />
+                            <Span Text="Se connecter" TextColor="{StaticResource Primary}"
+                                  FontFamily="OpenSansSemibold" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>

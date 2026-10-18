@@ -6,6 +6,10 @@
     xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
     xmlns:pages="clr-namespace:Notemaster.Pages"
     Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarForegroundColor="{StaticResource Primary}"
+    Shell.TabBarTitleColor="{StaticResource Primary}"
+    Shell.TabBarUnselectedColor="{StaticResource NMMuted}"
     Title="Notemaster">
     
     <ShellContent ContentTemplate="{DataTemplate pages:LoginPage}" Route="login" />
@@ -13,15 +17,15 @@
     <ShellContent ContentTemplate="{DataTemplate pages:RecoveryPage}" Route="recovery" />
     <TabBar>
     <ShellContent Title="Accueil"
-                  Icon="{StaticResource IconDashboard}"
+                  Icon="{StaticResource NMIconHome}"
                   ContentTemplate="{DataTemplate pages:HomePage}"
                   Route="home" />
     <ShellContent Title="Mes cours"
-                  Icon="{StaticResource IconProjects}"
+                  Icon="{StaticResource NMIconCourses}"
                   ContentTemplate="{DataTemplate pages:CoursesPage}"
                   Route="courses" />
     <ShellContent Title="Profil"
-                  Icon="{StaticResource IconMeta}"
+                  Icon="{StaticResource NMIconProfile}"
                   ContentTemplate="{DataTemplate pages:ProfilePage}"
                   Route="profile" />
     </TabBar>

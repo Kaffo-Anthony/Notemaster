@@ -24,31 +24,55 @@ public partial class CoursesPage : ContentPage
     private void Refresh(string query)
     {
         var list = _all.Where(c => c.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
-        CoursesView.ItemsSource = list;
-        EmptyBox.IsVisible = list.Count == 0;
+    CoursesView.ItemsSource = list;
+    EmptyBox.IsVisible = list.Count == 0;
+    CountLabel.Text = $"{_all.Count} cours";
 
-        if (_all.Count == 0)
-        {
+    if (_all.Count == 0)
+    {
+        EmptyIcon.Text = FluentUI.book_open_24_regular;
         EmptyTitle.Text = "Aucun cours pour le moment";
         EmptyText.Text = "Crée ton premier cours pour organiser tes fiches et révisions.";
-        }
-        else
-        {
-        EmptyTitle.Text = "Aucun résultat";
-        EmptyText.Text = $"Aucun cours ne correspond à « {query} ».";
-        }
-
+        ClearSearchButton.IsVisible = false;
     }
-
-    private async void OnCreateClicked(object sender, EventArgs e)
+    else
     {
-        var name = await DisplayPromptAsync("Créer un cours", "Nom du cours", "Créer", "Annuler", "Ex : Maths - Chapitre 4");
-        if (string.IsNullOrWhiteSpace(name)) return;
-        CourseStore.All.Add(new Course(name.Trim()));
-        DataStore.Save();
-        Refresh("");
+        EmptyIcon.Text = FluentUI.search_24_regular;
+        EmptyTitle.Text = "Aucun résultat";
+        EmptyText.Text = $"Aucun cours ne correspond à « {query} ». Essaie un autre mot-clé.";
+        ClearSearchButton.IsVisible = true;
     }
-    
+    }
+
+    private void OnCreateClicked(object sender, EventArgs e)
+    {
+         
+    NewCourseEntry.Text = "";
+    CreateError.IsVisible = false;
+    CreateOverlay.IsVisible = true;
+    NewCourseEntry.Focus();
+    }
+    private void OnCreateCancelClicked(object sender, EventArgs e) => CreateOverlay.IsVisible = false;
+    private void OnCreateConfirmClicked(object sender, EventArgs e)
+{
+    var name = NewCourseEntry.Text?.Trim();
+    if (string.IsNullOrWhiteSpace(name))
+    {
+        CreateError.Text = "Donne un nom à ton cours.";
+        CreateError.IsVisible = true;
+        return;
+    }
+    CourseStore.All.Add(new Course(name));
+    DataStore.Save();
+    CreateOverlay.IsVisible = false;
+    SearchEntry.Text = "";
+    Refresh("");
+}
+
+private void OnClearSearchClicked(object sender, EventArgs e) => SearchEntry.Text = "";
+
+
+
     private async void OnCourseSelected(object sender, SelectionChangedEventArgs e)
     {
     if (e.CurrentSelection.FirstOrDefault() is not Course course) return;

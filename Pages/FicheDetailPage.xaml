@@ -1,30 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              x:Class="Notemaster.Pages.FicheDetailPage"
              Title="Détail d'une fiche"
-             Shell.TabBarIsVisible="False">
-    <Grid Padding="20" RowSpacing="12" RowDefinitions="Auto,Auto,*,Auto">
-        <Label x:Name="TitleLabel" Grid.Row="0" FontSize="24" FontAttributes="Bold"
-               TextColor="{StaticResource Primary}" />
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource NMBackground}">
+    <Grid Padding="20,12,20,20" RowSpacing="14" RowDefinitions="Auto,Auto,*,Auto"
+          WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}"
+          HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
 
+        <Label x:Name="TitleLabel" Grid.Row="0" Style="{StaticResource NMScreenTitle}" FontSize="28" />
+
+        <!-- Onglets Résumé / Mots-clés (couleurs actives gérées par le code) -->
         <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
-            <Button x:Name="SummaryTab" Text="Résumé" HeightRequest="44" CornerRadius="12"
+            <Button x:Name="SummaryTab" Text="Résumé" HeightRequest="46" CornerRadius="14"
+                    FontFamily="OpenSansSemibold" FontSize="15" BorderWidth="0"
+                    BackgroundColor="{StaticResource Primary}" TextColor="White"
                     Clicked="OnSummaryTab" />
-            <Button x:Name="KeywordsTab" Grid.Column="1" Text="Mots-clés" HeightRequest="44"
-                    CornerRadius="12" Clicked="OnKeywordsTab" />
+            <Button x:Name="KeywordsTab" Grid.Column="1" Text="Mots-clés" HeightRequest="46" CornerRadius="14"
+                    FontFamily="OpenSansSemibold" FontSize="15" BorderWidth="0"
+                    BackgroundColor="{StaticResource NMSoft}" TextColor="{StaticResource NMInk}"
+                    Clicked="OnKeywordsTab" />
         </Grid>
 
         <ScrollView Grid.Row="2">
-            <Grid>
-                <Label x:Name="SummaryLabel" />
-                <VerticalStackLayout x:Name="KeywordsLayout" Spacing="10" IsVisible="False" />
-            </Grid>
+            <VerticalStackLayout Spacing="12">
+                <!-- En-tête des mots-clés (affiché par le code sur l'onglet Mots-clés) -->
+                <VerticalStackLayout x:Name="KeywordsHeader" Spacing="6" IsVisible="False">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                               Text="{x:Static f:FluentUI.tag_24_regular}" />
+                        <Label Text="Mots-clés" Style="{StaticResource NMSectionTitle}" VerticalOptions="Center" />
+                        <Border BackgroundColor="{StaticResource NMSoft}" StrokeThickness="0" Padding="10,3"
+                                VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Label x:Name="KeywordsCountLabel" FontSize="12" FontFamily="OpenSansSemibold"
+                                   TextColor="{StaticResource Primary}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                    <Label Text="Appuie sur un mot-clé pour voir sa définition et son niveau d'importance."
+                           Style="{StaticResource NMMuted}" />
+                </VerticalStackLayout>
+
+                <Grid>
+                    <Label x:Name="SummaryLabel" Style="{StaticResource NMBody}" FontSize="16" LineHeight="1.4" />
+                    <VerticalStackLayout x:Name="KeywordsLayout" Spacing="10" IsVisible="False" />
+                </Grid>
+            </VerticalStackLayout>
         </ScrollView>
 
         <Button Grid.Row="3" Text="Lancer l'auto-évaluation (facultatif)"
-                BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
-                BorderColor="{StaticResource Primary}" BorderWidth="1"
-                HeightRequest="52" CornerRadius="26" Clicked="OnQuizClicked" />
+                Style="{StaticResource NMOutlineButton}" HeightRequest="54" CornerRadius="27"
+                Clicked="OnQuizClicked" />
     </Grid>
 </ContentPage>

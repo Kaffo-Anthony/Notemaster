@@ -1,48 +1,108 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              x:Class="Notemaster.Pages.PreviewPage"
              Title="Aperçu avant génération"
-             Shell.TabBarIsVisible="False">
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="12">
-            <Label Text="Vérifie ta note avant de générer les fiches." />
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource NMBackground}">
+    <Grid>
+        <!-- ===== Contenu de la page ===== -->
+        <ScrollView>
+            <VerticalStackLayout Padding="20,12,20,24" Spacing="16"
+                                 WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}"
+                                 HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
 
-            <VerticalStackLayout x:Name="PhotosSection" Spacing="8" IsVisible="False">
-                <Label x:Name="PagesLabel" FontAttributes="Bold" />
-                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
-                    <HorizontalStackLayout x:Name="ThumbsLayout" Spacing="10" />
-                </ScrollView>
-                <Button x:Name="AddPageButton" Text="+ Ajouter une page"
-                        BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
-                        BorderColor="{StaticResource Primary}" BorderWidth="1"
-                        HeightRequest="44" CornerRadius="12" Clicked="OnAddPageClicked" />
+                <Label Text="Vérifie ta note avant de générer les fiches." Style="{StaticResource NMMuted}"
+                       FontSize="14" />
+
+                <!-- Note photo : vignettes (construites par le code) -->
+                <VerticalStackLayout x:Name="PhotosSection" Spacing="10" IsVisible="False">
+                    <Label x:Name="PagesLabel" Style="{StaticResource NMSectionTitle}" />
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout x:Name="ThumbsLayout" Spacing="12" />
+                    </ScrollView>
+                    <Button x:Name="AddPageButton" Text="+ Ajouter une page"
+                            Style="{StaticResource NMOutlineButton}" HeightRequest="44" FontSize="14"
+                            Clicked="OnAddPageClicked" />
+                </VerticalStackLayout>
+
+                <!-- Note texte ou Word : extrait -->
+                <Border x:Name="TextSection" Style="{StaticResource NMCard}" Padding="16" IsVisible="False">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{StaticResource NMSoft}"
+                                StrokeThickness="0" VerticalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource NMIconGlyph}"
+                                   Text="{x:Static f:FluentUI.document_text_24_regular}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="Aperçu de ta note" Style="{StaticResource NMFieldLabel}" />
+                            <Label x:Name="PreviewText" Style="{StaticResource NMBody}" FontSize="14" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Paramètres de génération -->
+                <Border Style="{StaticResource NMCard}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Paramètres de génération" Style="{StaticResource NMSectionTitle}" />
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Cours" Style="{StaticResource NMFieldLabel}" />
+                            <Border Style="{StaticResource NMField}">
+                                <Picker x:Name="CoursePicker" Title="Choisir un cours"
+                                        TitleColor="{StaticResource NMMutedColor}"
+                                        TextColor="{StaticResource NMText}" BackgroundColor="Transparent"
+                                        FontFamily="OpenSansRegular" FontSize="15" VerticalOptions="Center"
+                                        SelectedIndexChanged="OnCourseChanged" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Titre" Style="{StaticResource NMFieldLabel}" />
+                            <Border Style="{StaticResource NMField}">
+                                <Entry x:Name="TitleEntry" Style="{StaticResource NMEntry}"
+                                       Placeholder="Titre de la note" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Button x:Name="GenerateButton" Text="Générer les fiches" IsEnabled="False"
+                                Style="{StaticResource NMPrimaryButton}" HeightRequest="54" CornerRadius="27"
+                                Clicked="OnGenerateClicked" />
+                        <Label x:Name="HintLabel" Text="Sélectionne un cours pour continuer."
+                               Style="{StaticResource NMMuted}" FontSize="12" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
+        </ScrollView>
 
-            <Border x:Name="TextSection" BackgroundColor="#F3F4F6" Padding="12"
-                    StrokeThickness="0" IsVisible="False">
-                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                <Label x:Name="PreviewText" TextColor="Black" />
+        <!-- ===== Fenêtre "Créer un cours" ===== -->
+        <Grid x:Name="CreateOverlay" IsVisible="False" BackgroundColor="#990F0B3D" Padding="24">
+            <Border Style="{StaticResource NMCard}" VerticalOptions="Center"
+                    WidthRequest="{OnIdiom -1, Desktop=380, Tablet=380}"
+                    HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Créer un cours" Style="{StaticResource NMSectionTitle}" FontSize="22"
+                           HorizontalOptions="Center" />
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Nom du cours" Style="{StaticResource NMFieldLabel}" />
+                        <Border Style="{StaticResource NMField}">
+                            <Entry x:Name="NewCourseEntry" Style="{StaticResource NMEntry}"
+                                   Placeholder="Ex : Maths - Chapitre 4" Completed="OnCreateConfirmClicked" />
+                        </Border>
+                        <Label x:Name="CreateError" Style="{StaticResource NMErrorLabel}" IsVisible="False" />
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Button Text="Annuler" Style="{StaticResource NMOutlineButton}" HeightRequest="48"
+                                Clicked="OnCreateCancelClicked" />
+                        <Button Grid.Column="1" Text="Créer" Style="{StaticResource NMPrimaryButton}"
+                                HeightRequest="48" Clicked="OnCreateConfirmClicked" />
+                    </Grid>
+                </VerticalStackLayout>
             </Border>
-
-            <Label Text="Cours" FontAttributes="Bold" />
-            <Picker x:Name="CoursePicker" Title="Choisir un cours"
-                    SelectedIndexChanged="OnCourseChanged" />
-
-            <Label Text="Titre" FontAttributes="Bold" />
-            <Entry x:Name="TitleEntry" Placeholder="Titre de la note" HeightRequest="48" />
-
-            <Button x:Name="GenerateButton" Text="Générer les fiches" IsEnabled="False"
-                    BackgroundColor="{StaticResource Primary}" TextColor="White"
-                    HeightRequest="52" CornerRadius="26" Clicked="OnGenerateClicked">
-                <Button.Triggers>
-                    <Trigger TargetType="Button" Property="IsEnabled" Value="False">
-                        <Setter Property="BackgroundColor" Value="#9CA3AF" />
-                    </Trigger>
-                </Button.Triggers>
-            </Button>
-            <Label x:Name="HintLabel" Text="Sélectionne un cours pour continuer."
-                   HorizontalOptions="Center" FontSize="12" TextColor="#6B7280" />
-        </VerticalStackLayout>
-    </ScrollView>
+        </Grid>
+    </Grid>
 </ContentPage>

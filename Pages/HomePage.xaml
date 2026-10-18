@@ -1,27 +1,57 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              x:Class="Notemaster.Pages.HomePage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource NMBackground}">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="16">
-            <Label x:Name="GreetingLabel" Text="Bonjour" FontSize="28" FontAttributes="Bold"
-                   TextColor="{StaticResource Primary}" />
-            <Label Text="Prêt pour tes révisions ?" />
-            <Button Text="Ajouter une note" BackgroundColor="{StaticResource Primary}"
-                    TextColor="White" HeightRequest="56" CornerRadius="14"
-                    Clicked="OnAddNoteClicked" />
-            <Border BackgroundColor="#E8EBFA" Padding="16" StrokeThickness="0">
+        <VerticalStackLayout Padding="24,40,24,24" Spacing="18"
+                             WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}"
+                             HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+
+            <VerticalStackLayout Spacing="4">
+                <Label x:Name="GreetingLabel" Text="Bonjour" Style="{StaticResource NMScreenTitle}"
+                       FontSize="34" />
+                <Label Text="Prêt pour tes révisions ?" Style="{StaticResource NMBody}"
+                       TextColor="{StaticResource NMMutedColor}" FontSize="17" />
+            </VerticalStackLayout>
+
+            <!-- Action principale -->
+            <Button Text="Ajouter une note" Style="{StaticResource NMPrimaryButton}"
+                    HeightRequest="60" FontSize="18" CornerRadius="16" Margin="0,8,0,0"
+                    ContentLayout="Left,10" Clicked="OnAddNoteClicked">
+                <Button.ImageSource>
+                    <FontImageSource FontFamily="{x:Static f:FluentUI.FontFamily}"
+                                     Glyph="{x:Static f:FluentUI.camera_24_regular}"
+                                     Color="White" Size="26" />
+                </Button.ImageSource>
+            </Button>
+
+            <!-- Accès aux cours -->
+            <Border BackgroundColor="{StaticResource NMSoft}" StrokeThickness="0" Padding="14">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="14" />
+                    <RoundRectangle CornerRadius="18" />
                 </Border.StrokeShape>
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnCoursesTapped" />
                 </Border.GestureRecognizers>
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="Mes cours" FontSize="18" FontAttributes="Bold" TextColor="Black" />
-                    <Label x:Name="CoursesInfoLabel" TextColor="#4B5563" />
-                </VerticalStackLayout>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Border WidthRequest="52" HeightRequest="52" BackgroundColor="White" StrokeThickness="0"
+                            VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="14" />
+                        </Border.StrokeShape>
+                        <Label Style="{StaticResource NMIconGlyph}" FontSize="28"
+                               Text="{x:Static f:FluentUI.book_open_24_regular}" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label Text="Mes cours" Style="{StaticResource NMSectionTitle}" />
+                        <Label x:Name="CoursesInfoLabel" Style="{StaticResource NMMuted}" FontSize="14" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Style="{StaticResource NMIconGlyph}" VerticalOptions="Center"
+                           Text="{x:Static f:FluentUI.chevron_right_24_regular}" />
+                </Grid>
             </Border>
         </VerticalStackLayout>
     </ScrollView>

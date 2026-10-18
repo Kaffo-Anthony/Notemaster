@@ -1,34 +1,112 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              x:Class="Notemaster.Pages.ProcessingPage"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
-             BackgroundColor="{StaticResource Primary}">
-    <Grid Padding="20" VerticalOptions="Center">
-        <Border BackgroundColor="White" Padding="24" StrokeThickness="0">
-            <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+             BackgroundColor="#1F2766">
+    <Grid Padding="24" VerticalOptions="Center">
+        <Border Style="{StaticResource NMCard}" Padding="22"
+                WidthRequest="{OnIdiom -1, Desktop=380, Tablet=380}"
+                HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
             <Grid>
+                <!-- ===== Chargement : progression par étapes ===== -->
                 <VerticalStackLayout x:Name="LoadingSection" Spacing="14">
-                    <Label Text="Traitement en cours" FontSize="22" FontAttributes="Bold"
-                           TextColor="Black" HorizontalOptions="Center" />
-                    <ActivityIndicator IsRunning="True" Color="{StaticResource Primary}" HeightRequest="40" />
-                    <Label x:Name="Step1Label" TextColor="Black" />
-                    <Label x:Name="Step2Label" TextColor="Black" />
-                    <Label x:Name="Step3Label" TextColor="Black" />
-                    <Label Text="Cela peut prendre quelques instants." FontSize="12"
-                           TextColor="#6B7280" HorizontalOptions="Center" />
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Traitement en cours" Style="{StaticResource NMSectionTitle}" FontSize="22" />
+                        <Label x:Name="PercentLabel" Grid.Column="1" Text="0 %" Style="{StaticResource NMLink}"
+                               FontSize="16" VerticalOptions="Center" />
+                    </Grid>
+                    <ProgressBar x:Name="StepProgress" Progress="0" ProgressColor="{StaticResource Primary}"
+                                 BackgroundColor="{StaticResource NMLine}" />
+                    <Label Text="Nous transformons ta note en fiches de révision." Style="{StaticResource NMMuted}"
+                           FontSize="13" />
+
+                    <!-- Étape 1 -->
+                    <Border x:Name="Step1Row" BackgroundColor="#F3F4FA" StrokeThickness="0" Padding="12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                            <Label x:Name="Step1Icon" Style="{StaticResource NMIconGlyph}"
+                                   TextColor="{StaticResource NMMutedColor}"
+                                   Text="{x:Static f:FluentUI.clock_24_regular}" />
+                            <Label x:Name="Step1Label" Grid.Column="1" Text="Analyse de la note"
+                                   Style="{StaticResource NMBody}" FontSize="14" VerticalOptions="Center" />
+                            <Border Grid.Column="2" BackgroundColor="#B3FFFFFF" StrokeThickness="0" Padding="8,3"
+                                    VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Label x:Name="Step1Badge" Text="En attente" FontSize="11"
+                                       TextColor="{StaticResource NMMutedColor}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Étape 2 -->
+                    <Border x:Name="Step2Row" BackgroundColor="#F3F4FA" StrokeThickness="0" Padding="12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                            <Label x:Name="Step2Icon" Style="{StaticResource NMIconGlyph}"
+                                   TextColor="{StaticResource NMMutedColor}"
+                                   Text="{x:Static f:FluentUI.clock_24_regular}" />
+                            <Label x:Name="Step2Label" Grid.Column="1" Text="Extraction des notions clés"
+                                   Style="{StaticResource NMBody}" FontSize="14" VerticalOptions="Center" />
+                            <Border Grid.Column="2" BackgroundColor="#B3FFFFFF" StrokeThickness="0" Padding="8,3"
+                                    VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Label x:Name="Step2Badge" Text="En attente" FontSize="11"
+                                       TextColor="{StaticResource NMMutedColor}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Étape 3 -->
+                    <Border x:Name="Step3Row" BackgroundColor="#F3F4FA" StrokeThickness="0" Padding="12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                            <Label x:Name="Step3Icon" Style="{StaticResource NMIconGlyph}"
+                                   TextColor="{StaticResource NMMutedColor}"
+                                   Text="{x:Static f:FluentUI.clock_24_regular}" />
+                            <Label x:Name="Step3Label" Grid.Column="1" Text="Génération des fiches"
+                                   Style="{StaticResource NMBody}" FontSize="14" VerticalOptions="Center" />
+                            <Border Grid.Column="2" BackgroundColor="#B3FFFFFF" StrokeThickness="0" Padding="8,3"
+                                    VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Label x:Name="Step3Badge" Text="En attente" FontSize="11"
+                                       TextColor="{StaticResource NMMutedColor}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Label Text="Cela peut prendre quelques instants." Style="{StaticResource NMMuted}"
+                           FontSize="12" HorizontalOptions="Center" />
                 </VerticalStackLayout>
 
+                <!-- ===== Échec : même écran pour toutes les erreurs, seul le message change ===== -->
                 <VerticalStackLayout x:Name="ErrorSection" Spacing="14" IsVisible="False">
-                    <Label Text="Traitement échoué" FontSize="22" FontAttributes="Bold"
-                           TextColor="#DC2626" HorizontalOptions="Center" />
-                    <Label x:Name="ErrorLabel" TextColor="Black" HorizontalTextAlignment="Center" />
-                    <Button Text="Réessayer" BackgroundColor="{StaticResource Primary}" TextColor="White"
-                            HeightRequest="48" CornerRadius="12" Clicked="OnRetryClicked" />
-                    <Button Text="Annuler" BackgroundColor="Transparent"
-                            TextColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}"
-                            BorderWidth="1" HeightRequest="48" CornerRadius="12" Clicked="OnCancelClicked" />
+                    <Label Style="{StaticResource NMIconGlyph}" FontSize="64" TextColor="{StaticResource NMDanger}"
+                           Text="{x:Static f:FluentUI.error_circle_24_regular}" />
+                    <Label Text="Traitement échoué" Style="{StaticResource NMSectionTitle}" FontSize="22"
+                           TextColor="{StaticResource NMDanger}" HorizontalOptions="Center" />
+                    <Label x:Name="ErrorLabel" Style="{StaticResource NMBody}" FontSize="14"
+                           HorizontalTextAlignment="Center" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,6,0,0">
+                        <Button Text="Réessayer" Style="{StaticResource NMPrimaryButton}" HeightRequest="48"
+                                Clicked="OnRetryClicked" />
+                        <Button Grid.Column="1" Text="Annuler" Style="{StaticResource NMOutlineButton}"
+                                HeightRequest="48" Clicked="OnCancelClicked" />
+                    </Grid>
                 </VerticalStackLayout>
             </Grid>
         </Border>

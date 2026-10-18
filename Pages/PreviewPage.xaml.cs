@@ -31,36 +31,51 @@ public partial class PreviewPage : ContentPage
     }
 
     private void BuildThumbs()
+{
+    ThumbsLayout.Children.Clear();
+
+    for (int i = 0; i < NoteDraft.Photos.Count; i++)
     {
-        ThumbsLayout.Children.Clear();
+        int index = i;
+        var thumb = new VerticalStackLayout { Spacing = 8, WidthRequest = 130 };
 
-        for (int i = 0; i < NoteDraft.Photos.Count; i++)
+        thumb.Children.Add(new Border
         {
-            int index = i;
-            var thumb = new VerticalStackLayout { Spacing = 4, WidthRequest = 120 };
-
-            thumb.Children.Add(new Image
+            StrokeThickness = 0,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(14) },
+            Content = new Image
             {
                 Source = ImageSource.FromFile(NoteDraft.Photos[i]),
-                WidthRequest = 120,
-                HeightRequest = 150,
+                WidthRequest = 130,
+                HeightRequest = 160,
                 Aspect = Aspect.AspectFill
-            });
+            }
+        });
 
-            var replace = new Button { Text = "Remplacer", FontSize = 12, HeightRequest = 36, Padding = new Thickness(4, 0) };
-            replace.Clicked += async (s, e) => await ReplacePhoto(index);
-            thumb.Children.Add(replace);
+        var replace = new Button
+        {
+            Text = "Remplacer", FontSize = 12, HeightRequest = 36, CornerRadius = 10, Padding = new Thickness(4, 0),
+            BackgroundColor = Colors.Transparent, TextColor = Color.FromArgb("#3F4FC4"),
+            BorderColor = Color.FromArgb("#3F4FC4"), BorderWidth = 1.5
+        };
+        replace.Clicked += async (s, e) => await ReplacePhoto(index);
+        thumb.Children.Add(replace);
 
-            var remove = new Button { Text = "Retirer", FontSize = 12, HeightRequest = 36, Padding = new Thickness(4, 0), BackgroundColor = Color.FromArgb("#DC2626") };
-            remove.Clicked += async (s, e) => await RemovePhoto(index);
-            thumb.Children.Add(remove);
+        var remove = new Button
+        {
+            Text = "Retirer", FontSize = 12, HeightRequest = 36, CornerRadius = 10, Padding = new Thickness(4, 0),
+            BackgroundColor = Colors.Transparent, TextColor = Color.FromArgb("#DC2626"),
+            BorderColor = Color.FromArgb("#DC2626"), BorderWidth = 1.5
+        };
+        remove.Clicked += async (s, e) => await RemovePhoto(index);
+        thumb.Children.Add(remove);
 
-            ThumbsLayout.Children.Add(thumb);
-        }
-
-        PagesLabel.Text = $"Tes pages ({NoteDraft.Photos.Count}/{NoteDraft.MaxPhotos})";
-        AddPageButton.IsVisible = NoteDraft.Photos.Count < NoteDraft.MaxPhotos;
+        ThumbsLayout.Children.Add(thumb);
     }
+
+    PagesLabel.Text = $"Tes pages ({NoteDraft.Photos.Count}/{NoteDraft.MaxPhotos})";
+    AddPageButton.IsVisible = NoteDraft.Photos.Count < NoteDraft.MaxPhotos;
+}
 
     private async Task ReplacePhoto(int index)
     {
@@ -122,22 +137,16 @@ public partial class PreviewPage : ContentPage
         if (select != null) CoursePicker.SelectedIndex = items.IndexOf(select);
     }
 
-    private async void OnCourseChanged(object sender, EventArgs e)
+    private void OnCourseChanged(object sender, EventArgs e)
     {
         var index = CoursePicker.SelectedIndex;
-
-        if (index == CourseStore.All.Count)   // « + Créer un cours »
+        if (index == CourseStore.All.Count) 
         {
-            var name = await DisplayPromptAsync("Créer un cours", "Nom du cours", "Créer", "Annuler", "Ex : Maths - Chapitre 4");
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                CoursePicker.SelectedIndex = -1;
-                return;
-            }
-            name = name.Trim();
-            CourseStore.All.Add(new Course(name));
-            DataStore.Save();
-            LoadCourses(name);
+            CoursePicker.SelectedIndex = -1;
+            NewCourseEntry.Text = "";
+            CreateError.IsVisible = false;
+            CreateOverlay.IsVisible = true;
+            NewCourseEntry.Focus();
             return;
         }
 
@@ -145,12 +154,28 @@ public partial class PreviewPage : ContentPage
         HintLabel.IsVisible = index < 0;
     }
 
+    private void OnCreateCancelClicked(object sender, EventArgs e) => CreateOverlay.IsVisible = false;
+
+    private void OnCreateConfirmClicked(object sender, EventArgs e)
+    {
+        var name = NewCourseEntry.Text?.Trim();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            CreateError.Text = "Donne un nom à ton cours.";
+            CreateError.IsVisible = true;
+            return;
+        }
+
+        CourseStore.All.Add(new Course(name));
+        DataStore.Save();
+        CreateOverlay.IsVisible = false;
+        LoadCourses(name);
+    }
+
     private async void OnGenerateClicked(object sender, EventArgs e)
     {
         NoteDraft.CourseName = CoursePicker.SelectedItem?.ToString() ?? "";
         NoteDraft.Title = TitleEntry.Text?.Trim() ?? "";
         await Shell.Current.GoToAsync("processing");
-        
     }
-       
 }

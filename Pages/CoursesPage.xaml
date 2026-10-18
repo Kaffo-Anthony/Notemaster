@@ -1,45 +1,136 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              xmlns:models="clr-namespace:Notemaster.Models"
              x:Class="Notemaster.Pages.CoursesPage"
-             Shell.NavBarIsVisible="False">
-    <Grid Padding="20" RowSpacing="12" RowDefinitions="Auto,Auto,*,Auto">
-        <Label Grid.Row="0" Text="Mes cours" FontSize="28" FontAttributes="Bold"
-               TextColor="{StaticResource Primary}" />
-        <SearchBar Grid.Row="1" Placeholder="Rechercher un cours..." TextChanged="OnSearchChanged" />
+             x:DataType="ContentPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource NMBackground}">
+    <Grid>
+        <!-- ===== Contenu de la page ===== -->
+        <Grid Padding="20,32,20,16" RowSpacing="14" RowDefinitions="Auto,Auto,*,Auto"
+              WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}"
+              HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
 
-        <CollectionView x:Name="CoursesView" Grid.Row="2" SelectionMode="Single" SelectionChanged="OnCourseSelected">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="2"
-                                 HorizontalItemSpacing="12" VerticalItemSpacing="12" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Course">
-                    <Border BackgroundColor="{StaticResource Primary}" Padding="14"
-                            HeightRequest="110" StrokeThickness="0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="14" />
-                        </Border.StrokeShape>
-                        <VerticalStackLayout Spacing="6" VerticalOptions="End">
-                            <Label Text="{Binding Name}" TextColor="White"
-                                   FontAttributes="Bold" LineBreakMode="WordWrap" />
-                            <Label Text="{Binding Info}" TextColor="White" FontSize="12" />
-                        </VerticalStackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <!-- Titre + nombre de cours -->
+            <HorizontalStackLayout Grid.Row="0" Spacing="12">
+                <Label Text="Mes cours" Style="{StaticResource NMScreenTitle}" FontSize="34"
+                       VerticalOptions="Center" />
+                <Border BackgroundColor="{StaticResource Primary}" StrokeThickness="0" Padding="10,4"
+                        VerticalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Label x:Name="CountLabel" Text="0 cours" TextColor="White" FontSize="13"
+                           FontFamily="OpenSansSemibold" />
+                </Border>
+            </HorizontalStackLayout>
 
-        <VerticalStackLayout x:Name="EmptyBox" Grid.Row="2" IsVisible="False"
-                     VerticalOptions="Center" Spacing="8">
-           <Label x:Name="EmptyTitle" FontSize="20" FontAttributes="Bold"
-           HorizontalOptions="Center" HorizontalTextAlignment="Center" />
-           <Label x:Name="EmptyText" HorizontalOptions="Center"
-           HorizontalTextAlignment="Center" TextColor="#6B7280" />
-        </VerticalStackLayout>
+            <!-- Recherche -->
+            <Border Grid.Row="1" Style="{StaticResource NMField}" HeightRequest="46">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Label Style="{StaticResource NMIconGlyph}" TextColor="{StaticResource NMMutedColor}"
+                           Text="{x:Static f:FluentUI.search_24_regular}" />
+                    <Entry x:Name="SearchEntry" Grid.Column="1" Style="{StaticResource NMEntry}"
+                           Placeholder="Rechercher un cours..." ClearButtonVisibility="WhileEditing"
+                           TextChanged="OnSearchChanged" />
+                </Grid>
+            </Border>
 
-        <Button Grid.Row="3" Text="+ Créer un cours" BackgroundColor="{StaticResource Primary}"
-                TextColor="White" HeightRequest="52" CornerRadius="26" Clicked="OnCreateClicked" />
+            <!-- Grille des cours -->
+            <CollectionView x:Name="CoursesView" Grid.Row="2" SelectionMode="Single"
+                            SelectionChanged="OnCourseSelected">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"
+                                     HorizontalItemSpacing="12" VerticalItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Course">
+                        <Border BackgroundColor="White" StrokeThickness="0" Margin="2,2,2,6">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="18" />
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="#3F4FC4" Opacity="0.12" Radius="12" Offset="0,4" />
+                            </Border.Shadow>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="White" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <VerticalStackLayout Spacing="0">
+                                <!-- Bandeau coloré : couleur propre à chaque cours -->
+                                <Grid HeightRequest="104" Padding="14,12" BackgroundColor="{Binding Accent}">
+                                    <Label Style="{StaticResource NMIconGlyph}" TextColor="#CCFFFFFF" FontSize="22"
+                                           HorizontalOptions="Start" VerticalOptions="Start"
+                                           Text="{x:Static f:FluentUI.book_open_24_regular}" />
+                                    <Label Text="{Binding Name}" TextColor="White" FontFamily="OpenSansSemibold"
+                                           FontSize="16" LineBreakMode="TailTruncation" MaxLines="2"
+                                           VerticalOptions="End" />
+                                </Grid>
+                                <!-- Pied blanc : nombre de fiches -->
+                                <HorizontalStackLayout Padding="14,11" Spacing="8">
+                                    <Label Style="{StaticResource NMIconGlyph}" FontSize="18"
+                                           TextColor="{StaticResource NMMutedColor}"
+                                           Text="{x:Static f:FluentUI.document_24_regular}" />
+                                    <Label Text="{Binding Info}" Style="{StaticResource NMMuted}"
+                                           TextColor="{StaticResource NMText}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- États vides : "Aucun cours" et "Aucun résultat" (textes et icône gérés par le code) -->
+            <VerticalStackLayout x:Name="EmptyBox" Grid.Row="2" IsVisible="False"
+                                 VerticalOptions="Center" Spacing="10">
+                <Label x:Name="EmptyIcon" Style="{StaticResource NMIconGlyph}" FontSize="110"
+                       Text="{x:Static f:FluentUI.book_open_24_regular}" />
+                <Label x:Name="EmptyTitle" Style="{StaticResource NMSectionTitle}" FontSize="22"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                <Label x:Name="EmptyText" Style="{StaticResource NMMuted}" FontSize="14"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                <Button x:Name="ClearSearchButton" Text="Effacer la recherche" IsVisible="False"
+                        Style="{StaticResource NMOutlineButton}" HeightRequest="44" FontSize="14"
+                        WidthRequest="220" HorizontalOptions="Center" Margin="0,8,0,0"
+                        Clicked="OnClearSearchClicked" />
+            </VerticalStackLayout>
+
+            <Button Grid.Row="3" Text="+ Créer un cours" Style="{StaticResource NMPrimaryButton}"
+                    HeightRequest="54" CornerRadius="27" Clicked="OnCreateClicked" />
+        </Grid>
+
+        <!-- ===== Fenêtre "Créer un cours" ===== -->
+        <Grid x:Name="CreateOverlay" IsVisible="False" BackgroundColor="#990F0B3D" Padding="24">
+            <Border Style="{StaticResource NMCard}" VerticalOptions="Center"
+                    WidthRequest="{OnIdiom -1, Desktop=380, Tablet=380}"
+                    HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Créer un cours" Style="{StaticResource NMSectionTitle}" FontSize="22"
+                           HorizontalOptions="Center" />
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Nom du cours" Style="{StaticResource NMFieldLabel}" />
+                        <Border Style="{StaticResource NMField}">
+                            <Entry x:Name="NewCourseEntry" Style="{StaticResource NMEntry}"
+                                   Placeholder="Ex : Maths - Chapitre 4" Completed="OnCreateConfirmClicked" />
+                        </Border>
+                        <Label x:Name="CreateError" Style="{StaticResource NMErrorLabel}" IsVisible="False" />
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Button Text="Annuler" Style="{StaticResource NMOutlineButton}" HeightRequest="48"
+                                Clicked="OnCreateCancelClicked" />
+                        <Button Grid.Column="1" Text="Créer" Style="{StaticResource NMPrimaryButton}"
+                                HeightRequest="48" Clicked="OnCreateConfirmClicked" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
     </Grid>
 </ContentPage>

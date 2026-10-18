@@ -39,6 +39,13 @@ public partial class LoginPage : ContentPage
         await Shell.Current.GoToAsync("//home");
     }
 
+    // Interface uniquement : afficher / masquer le mot de passe
+    private void OnTogglePasswordTapped(object sender, TappedEventArgs e)
+    {
+        PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
+        PasswordEye.Text = PasswordEntry.IsPassword ? FluentUI.eye_24_regular : FluentUI.eye_off_24_regular;
+    }
+
     private void ShowError(string message)
     {
         ErrorLabel.Text = message;

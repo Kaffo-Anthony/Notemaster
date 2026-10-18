@@ -1,36 +1,73 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:Fonts"
              x:Class="Notemaster.Pages.RecoveryPage"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource Primary}">
+             BackgroundColor="{StaticResource NMPageColor}">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
-            <Label Text="Récupération" FontSize="28" FontAttributes="Bold"
-                   TextColor="White" HorizontalOptions="Center" />
+        <!-- Fond en deux tons : bandeau bleu (230) puis zone claire ; la carte chevauche la frontière -->
+        <Grid RowDefinitions="230,Auto">
+            <BoxView Grid.Row="0" Color="{StaticResource Primary}" />
 
-            <Border BackgroundColor="White" Padding="20" StrokeThickness="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="16" />
-                </Border.StrokeShape>
-                <VerticalStackLayout Spacing="14">
-                    <Label Text="Mot de passe oublié ?" FontSize="20" FontAttributes="Bold" TextColor="Black" />
-                    <Label Text="Entrez votre email, nous vous enverrons un lien pour réinitialiser votre mot de passe."
-                           TextColor="Black" />
-                    <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" HeightRequest="48"
-                           TextColor="Black" PlaceholderColor="Gray" />
-                    <Label x:Name="MessageLabel" IsVisible="False" />
-                    <Button Text="Envoyer le lien" BackgroundColor="{StaticResource Primary}"
-                            TextColor="White" HeightRequest="48" CornerRadius="12"
-                            Clicked="OnSendClicked" />
-                </VerticalStackLayout>
-            </Border>
+            <!-- En-tête : retour et titre -->
+            <Grid Grid.Row="0" ColumnDefinitions="48,*,48" Padding="12,28,12,0" VerticalOptions="Start"
+                  WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}" HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+                <Label Style="{StaticResource NMIconGlyph}" TextColor="White" FontSize="26"
+                       HorizontalOptions="Start" WidthRequest="44" HeightRequest="44"
+                       Text="{x:Static f:FluentUI.chevron_left_24_regular}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Column="1" Text="Récupération du mot de passe" Style="{StaticResource NMHeroTitle}"
+                       FontSize="22" HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                       VerticalOptions="Center" />
+            </Grid>
 
-            <Label Text="Retour à la connexion" TextColor="White" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnBackTapped" />
-                </Label.GestureRecognizers>
-            </Label>
-        </VerticalStackLayout>
+            <!-- Carte de récupération + retour à la connexion -->
+            <VerticalStackLayout Grid.RowSpan="2" Margin="24,110,24,32" Spacing="22" VerticalOptions="Start"
+                                 WidthRequest="{OnIdiom -1, Desktop=420, Tablet=420}" HorizontalOptions="{OnIdiom Fill, Desktop=Center, Tablet=Center}">
+                <Border Style="{StaticResource NMCard}">
+                    <VerticalStackLayout Spacing="16">
+                        <Border WidthRequest="64" HeightRequest="64" BackgroundColor="{StaticResource NMSoft}"
+                                StrokeThickness="0" HorizontalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="32" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource NMIconGlyph}" FontSize="30"
+                                   Text="{x:Static f:FluentUI.lock_closed_24_regular}" />
+                        </Border>
+
+                        <Label Text="Mot de passe oublié ?" Style="{StaticResource NMSectionTitle}"
+                               FontSize="22" HorizontalOptions="Center" />
+                        <Label Text="Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe."
+                               Style="{StaticResource NMBody}" FontSize="14"
+                               HorizontalTextAlignment="Center" />
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Email" Style="{StaticResource NMFieldLabel}" />
+                            <Border Style="{StaticResource NMField}">
+                                <Entry x:Name="EmailEntry" Style="{StaticResource NMEntry}"
+                                       Placeholder="prenom.nom@universite.fr" Keyboard="Email" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Message d'état : "Lien envoyé" ou "Email invalide" (texte et couleur gérés par le code) -->
+                        <Label x:Name="MessageLabel" IsVisible="False" FontSize="14"
+                               HorizontalTextAlignment="Center" />
+
+                        <Button Text="Envoyer le lien" Style="{StaticResource NMPrimaryButton}"
+                                Clicked="OnSendClicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Retour à la connexion" Style="{StaticResource NMLink}" HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>
